@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jupyter-chat-widget"
-version = "0.1.0"
+dynamic = ["version"]
 description = "A simple chat UI widget for Jupyter notebooks"
 readme = "README.md"
 license = "MIT"
@@ -56,6 +56,9 @@ include = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/jupyter_chat_widget"]
+
+[tool.hatch.version]
+path = "src/jupyter_chat_widget/_version.py"
 
 [tool.ruff]
 line-length = 88
