@@ -3,6 +3,7 @@
 A simple chat UI widget for Jupyter notebooks with streaming response support, designed to integrate easily with LLM APIs.
 
 [![CI](https://github.com/zansara/jupyter-chat-widget/workflows/CI/badge.svg)](https://github.com/zansara/jupyter-chat-widget/actions)
+[![Docs](https://github.com/zansara/jupyter-chat-widget/workflows/Deploy%20Docs/badge.svg)](https://zansara.github.io/jupyter-chat-widget/)
 [![PyPI version](https://badge.fury.io/py/jupyter-chat-widget.svg)](https://badge.fury.io/py/jupyter-chat-widget)
 [![Python versions](https://img.shields.io/pypi/pyversions/jupyter-chat-widget.svg)](https://pypi.org/project/jupyter-chat-widget/)
 
@@ -32,7 +33,7 @@ chat.connect(handle_message)
 
 ## Documentation
 
-See the [example notebook](examples/basic_usage.ipynb) in `examples/`.
+See the [live documentation](https://zansara.github.io/jupyter-chat-widget/) or the [example notebook](examples/basic_usage.ipynb) in `examples/`.
 
 ## API Reference
 
