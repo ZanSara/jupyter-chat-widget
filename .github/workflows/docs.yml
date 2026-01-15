@@ -41,7 +41,7 @@ jobs:
 
       - name: Inject custom CSS
         run: |
-          sed -i 's|</head>|<link rel="stylesheet" href="custom.css"></head>|' _site/index.html
+          sed -i 's|</head>|<link rel="stylesheet" href="https://www.zansara.dev/css/style.css"></head>|' _site/index.html
           cp docs/custom.css _site/
 
       - name: Upload artifact
