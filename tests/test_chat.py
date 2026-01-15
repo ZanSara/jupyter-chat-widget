@@ -162,9 +162,9 @@ class TestHtmlRendering:
         chat = ChatUI()
         html = chat._render_live_html("<")
         assert "&lt;" in html
-        assert "<" not in html.replace("&lt;", "").replace("<div", "").replace(
+        assert "<" not in html.replace("&lt;", "").replace("<p", "").replace(
             "<b>", ""
-        ).replace("</b>", "").replace("</div>", "")
+        ).replace("</b>", "").replace("</p>", "")
 
     def test_render_escapes_greater_than(self, mock_display: list) -> None:
         """Test that > is escaped."""
@@ -211,6 +211,7 @@ class TestHtmlRendering:
         assert "assistant:" in html
 
 
+
 class TestCommitLiveToChat:
     """Tests for _commit_live_to_chat() method."""
 
@@ -245,8 +246,7 @@ class TestOnSubmit:
             received_messages.append(msg)
 
         chat.connect(callback)
-        chat.text.value = "Hello"
-        chat._on_submit(chat.text)
+        chat._on_submit({"new": "Hello"})
 
         assert received_messages == ["Hello"]
 
@@ -258,16 +258,27 @@ class TestOnSubmit:
             raise ValueError("Test error")
 
         chat.connect(failing_callback)
-        chat.text.value = "test"
 
         with pytest.raises(ValueError, match="Test error"):
-            chat._on_submit(chat.text)
+            chat._on_submit({"new": "test"})
 
         # Input should be re-enabled despite exception
         assert chat.text.disabled is False
 
+    def test_empty_value_is_ignored(self, mock_display: list) -> None:
+        """Test that empty submissions are ignored."""
+        chat = ChatUI()
+        callback_called = []
+
+        def callback(msg: str) -> None:
+            callback_called.append(msg)
+
+        chat.connect(callback)
+        chat._on_submit({"new": ""})
+
+        assert callback_called == []
+
     def test_no_callback_doesnt_error(self, mock_display: list) -> None:
         """Test that submitting without a callback doesn't raise."""
         chat = ChatUI()
-        chat.text.value = "test"
-        chat._on_submit(chat.text)  # Should not raise
+        chat._on_submit({"new": "test"})  # Should not raise
