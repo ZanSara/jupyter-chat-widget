@@ -32,7 +32,17 @@ jobs:
       - name: Convert notebook to HTML
         run: |
           mkdir -p _site
-          jupyter nbconvert --to html --output-dir _site --output index examples/basic_usage.ipynb
+          jupyter nbconvert --to html \
+            --output-dir _site \
+            --output index \
+            --no-prompt \
+            --ClearOutputPreprocessor.enabled=True \
+            examples/basic_usage.ipynb
+
+      - name: Inject custom CSS
+        run: |
+          sed -i 's|</head>|<link rel="stylesheet" href="custom.css"></head>|' _site/index.html
+          cp docs/custom.css _site/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
