@@ -41,17 +41,12 @@ class ChatUI:
         self._live_response: str = ""
         self._has_live_response: bool = False
         self._callback: MessageCallback | None = None
-
         display(self.chat_out, self.response_out, self.text)
-
-        self.text.continuous_update = False
-        self.text.observe(self._on_submit, "value")
+        self.text.on_submit(self._on_submit)
 
     def _on_submit(self, change: dict) -> None:
         """Handle text submission."""
-        message = change["new"]
-        if not message:
-            return
+        message = self.text.value
         self._commit_live_to_chat()
         with self.chat_out:
             print("     user: " + message)
