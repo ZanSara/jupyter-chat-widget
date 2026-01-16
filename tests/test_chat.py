@@ -211,7 +211,6 @@ class TestHtmlRendering:
         assert "assistant:" in html
 
 
-
 class TestCommitLiveToChat:
     """Tests for _commit_live_to_chat() method."""
 

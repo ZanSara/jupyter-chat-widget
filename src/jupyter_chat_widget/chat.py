@@ -44,7 +44,7 @@ class ChatUI:
         display(self.chat_out, self.response_out, self.text)
         self.text.on_submit(self._on_submit)
 
-    def _on_submit(self, change: dict) -> None:
+    def _on_submit(self, _) -> None:
         """Handle text submission."""
         message = self.text.value
         self._commit_live_to_chat()
