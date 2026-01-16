@@ -162,9 +162,9 @@ class TestHtmlRendering:
         chat = ChatUI()
         html = chat._render_live_html("<")
         assert "&lt;" in html
-        assert "<" not in html.replace("&lt;", "").replace("<div", "").replace(
+        assert "<" not in html.replace("&lt;", "").replace("<p", "").replace(
             "<b>", ""
-        ).replace("</b>", "").replace("</div>", "")
+        ).replace("</b>", "").replace("</p>", "")
 
     def test_render_escapes_greater_than(self, mock_display: list) -> None:
         """Test that > is escaped."""

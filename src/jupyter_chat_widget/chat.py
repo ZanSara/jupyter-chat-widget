@@ -29,22 +29,22 @@ class ChatUI:
     """
 
     def __init__(self) -> None:
-        """Initialize the ChatUI widget."""
+        """Initialize the ChatUI widget.
+
+        Args:
+            wrap_text: Whether to wrap long text in the output. Defaults to True.
+                When False, long lines will scroll horizontally.
+        """
         self.text: widgets.Text = widgets.Text(description="user: ")
         self.chat_out: widgets.Output = widgets.Output()
         self.response_out: widgets.Output = widgets.Output()
         self._live_response: str = ""
         self._has_live_response: bool = False
         self._callback: MessageCallback | None = None
-
         display(self.chat_out, self.response_out, self.text)
-
-        with self.response_out:
-            display(HTML(self._render_live_html("")))
-
         self.text.on_submit(self._on_submit)
 
-    def _on_submit(self, _: widgets.Text) -> None:
+    def _on_submit(self, _) -> None:
         """Handle text submission."""
         message = self.text.value
         self._commit_live_to_chat()
@@ -82,9 +82,9 @@ class ChatUI:
         """
         escaped = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
         return f"""
-        <div style="font-family: monospace; white-space: nowrap; overflow-x: auto; padding: 4px 0;">
+        <p style="font-family: monospace;">
           <b>assistant:</b> {escaped}
-        </div>
+        </p>
         """
 
     def _update_live_line(self) -> None:
