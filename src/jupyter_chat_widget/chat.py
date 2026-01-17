@@ -49,7 +49,7 @@ class ChatUI:
         message = self.text.value
         self._commit_live_to_chat()
         with self.chat_out:
-            print("     user: " + message)
+            print("     <b>user:</b> " + message)
         self.text.value = ""
         self.text.disabled = True
         try:
@@ -80,7 +80,12 @@ class ChatUI:
         Returns:
             HTML string with proper escaping and styling.
         """
-        escaped = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        escaped = (
+            text.replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("\n", "<br>")
+        )
         return f"""
         <p style="font-family: monospace;">
           <b>assistant:</b> {escaped}
@@ -97,7 +102,7 @@ class ChatUI:
         """Commit the live response to the chat history."""
         if self._has_live_response:
             with self.chat_out:
-                print("assistant: " + self._live_response)
+                print("<b>assistant:</b> " + self._live_response)
         self._live_response = ""
         self._has_live_response = False
         self._update_live_line()
