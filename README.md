@@ -9,6 +9,9 @@ A simple chat UI widget for Jupyter notebooks with streaming response support, d
 [![PyPI version](https://badge.fury.io/py/jupyter-chat-widget.svg)](https://badge.fury.io/py/jupyter-chat-widget)
 [![Python versions](https://img.shields.io/pypi/pyversions/jupyter-chat-widget.svg)](https://pypi.org/project/jupyter-chat-widget/)
 
+
+![](jupyter-chat-widget.gif)
+
 ## Installation
 
 ```bash
