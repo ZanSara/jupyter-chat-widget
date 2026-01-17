@@ -159,12 +159,14 @@ class TestHtmlRendering:
 
     def test_render_escapes_less_than(self, mock_display: list) -> None:
         """Test that < is escaped when escape_html=True."""
+        import re
+
         chat = ChatUI(escape_html=True)
         html = chat._render_live_html("<")
         assert "&lt;" in html
-        assert "<" not in html.replace("&lt;", "").replace("<p", "").replace(
-            "<b>", ""
-        ).replace("</b>", "").replace("</p>", "")
+        # Strip all HTML tags and check no unescaped < remains
+        text_only = re.sub(r"<[^>]+>", "", html.replace("&lt;", ""))
+        assert "<" not in text_only
 
     def test_render_escapes_greater_than(self, mock_display: list) -> None:
         """Test that > is escaped when escape_html=True."""

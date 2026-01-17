@@ -28,7 +28,9 @@ class ChatUI:
         >>> chat.connect(my_handler)
     """
 
-    def __init__(self, escape_html: bool = False) -> None:
+    def __init__(
+        self, escape_html: bool = False, line_style: str | None = None
+    ) -> None:
         """Initialize the ChatUI widget.
 
         Args:
@@ -44,6 +46,7 @@ class ChatUI:
         self._callback: MessageCallback | None = None
         display(self.chat_out, self.response_out, self.text)
         self.text.on_submit(self._on_submit)
+        self.line_style = line_style or "padding: 5px;"
 
     def _on_submit(self, _) -> None:
         """Handle text submission."""
@@ -52,7 +55,13 @@ class ChatUI:
             return
         self._commit_live_to_chat()
         with self.chat_out:
-            display(HTML("<b>user:</b> " + message))
+            display(
+                HTML(
+                    f"<p style='{self.line_style}'><b style='padding-left: 45px;'>user:</b> "
+                    + message
+                    + " </p>"
+                )
+            )
         self.text.value = ""
         self.text.disabled = True
         try:
@@ -90,7 +99,7 @@ class ChatUI:
                 .replace(">", "&gt;")
                 .replace("\n", "<br>")
             )
-        return f"<b>assistant:</b> {text}"
+        return f"<p style='{self.line_style}'><b style='padding-left: 12px;'>assistant:</b> {text} </p>"
 
     def _update_live_line(self) -> None:
         """Update the live response display."""
@@ -102,7 +111,13 @@ class ChatUI:
         """Commit the live response to the chat history."""
         if self._has_live_response:
             with self.chat_out:
-                display(HTML("<b>assistant:</b> " + self._live_response))
+                display(
+                    HTML(
+                        f"<p style='{self.line_style}'><b style='padding-left: 12px;'>assistant:</b> "
+                        + self._live_response
+                        + " </p>"
+                    )
+                )
         self._live_response = ""
         self._has_live_response = False
         self._update_live_line()
