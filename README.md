@@ -2,6 +2,8 @@
 
 A simple chat UI widget for Jupyter notebooks with streaming response support, designed to integrate easily with LLM APIs.
 
+> *Note: this widget uses ipywidgets<8.0.0 for compatibility with Colab.*
+
 [![CI](https://github.com/zansara/jupyter-chat-widget/workflows/CI/badge.svg)](https://github.com/zansara/jupyter-chat-widget/actions)
 [![Docs](https://github.com/zansara/jupyter-chat-widget/workflows/Deploy%20Docs/badge.svg)](https://zansara.github.io/jupyter-chat-widget/)
 [![PyPI version](https://badge.fury.io/py/jupyter-chat-widget.svg)](https://badge.fury.io/py/jupyter-chat-widget)
