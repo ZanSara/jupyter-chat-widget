@@ -28,13 +28,14 @@ class ChatUI:
         >>> chat.connect(my_handler)
     """
 
-    def __init__(self) -> None:
+    def __init__(self, escape_html: bool = False) -> None:
         """Initialize the ChatUI widget.
 
         Args:
             wrap_text: Whether to wrap long text in the output. Defaults to True.
                 When False, long lines will scroll horizontally.
         """
+        self.escape_html = escape_html
         self.text: widgets.Text = widgets.Text(description="user: ")
         self.chat_out: widgets.Output = widgets.Output()
         self.response_out: widgets.Output = widgets.Output()
@@ -49,7 +50,7 @@ class ChatUI:
         message = self.text.value
         self._commit_live_to_chat()
         with self.chat_out:
-            display(HTML("     <b>user:</b> " + message))
+            display(HTML("<b>user:</b> " + message))
         self.text.value = ""
         self.text.disabled = True
         try:
@@ -80,12 +81,13 @@ class ChatUI:
         Returns:
             HTML string with proper escaping and styling.
         """
-        # escaped = (
-        #     text.replace("&", "&amp;")
-        #     .replace("<", "&lt;")
-        #     .replace(">", "&gt;")
-        #     .replace("\n", "<br>")
-        # )
+        if self.escape_html:
+            text = (
+                text.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\n", "<br>")
+            )
         return f"<b>assistant:</b> {text}"
 
     def _update_live_line(self) -> None:
