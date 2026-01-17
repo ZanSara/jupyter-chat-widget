@@ -48,6 +48,8 @@ class ChatUI:
     def _on_submit(self, _) -> None:
         """Handle text submission."""
         message = self.text.value
+        if not message:
+            return
         self._commit_live_to_chat()
         with self.chat_out:
             display(HTML("<b>user:</b> " + message))
