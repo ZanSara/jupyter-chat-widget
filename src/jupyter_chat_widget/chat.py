@@ -49,7 +49,7 @@ class ChatUI:
         message = self.text.value
         self._commit_live_to_chat()
         with self.chat_out:
-            print("     <b>user:</b> " + message)
+            display(HTML("     <b>user:</b> " + message))
         self.text.value = ""
         self.text.disabled = True
         try:
@@ -102,7 +102,7 @@ class ChatUI:
         """Commit the live response to the chat history."""
         if self._has_live_response:
             with self.chat_out:
-                print("<b>assistant:</b> " + self._live_response)
+                display(HTML("<b>assistant:</b> " + self._live_response))
         self._live_response = ""
         self._has_live_response = False
         self._update_live_line()
