@@ -80,13 +80,13 @@ class ChatUI:
         Returns:
             HTML string with proper escaping and styling.
         """
-        escaped = (
-            text.replace("&", "&amp;")
-            .replace("<", "&lt;")
-            .replace(">", "&gt;")
-            .replace("\n", "<br>")
-        )
-        return f"<b>assistant:</b> {escaped}"
+        # escaped = (
+        #     text.replace("&", "&amp;")
+        #     .replace("<", "&lt;")
+        #     .replace(">", "&gt;")
+        #     .replace("\n", "<br>")
+        # )
+        return f"<b>assistant:</b> {text}"
 
     def _update_live_line(self) -> None:
         """Update the live response display."""
