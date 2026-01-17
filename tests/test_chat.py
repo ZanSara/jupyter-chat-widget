@@ -158,8 +158,8 @@ class TestHtmlRendering:
     """Tests for HTML rendering and escaping."""
 
     def test_render_escapes_less_than(self, mock_display: list) -> None:
-        """Test that < is escaped."""
-        chat = ChatUI()
+        """Test that < is escaped when escape_html=True."""
+        chat = ChatUI(escape_html=True)
         html = chat._render_live_html("<")
         assert "&lt;" in html
         assert "<" not in html.replace("&lt;", "").replace("<p", "").replace(
@@ -167,20 +167,20 @@ class TestHtmlRendering:
         ).replace("</b>", "").replace("</p>", "")
 
     def test_render_escapes_greater_than(self, mock_display: list) -> None:
-        """Test that > is escaped."""
-        chat = ChatUI()
+        """Test that > is escaped when escape_html=True."""
+        chat = ChatUI(escape_html=True)
         html = chat._render_live_html(">")
         assert "&gt;" in html
 
     def test_render_escapes_ampersand(self, mock_display: list) -> None:
-        """Test that & is escaped."""
-        chat = ChatUI()
+        """Test that & is escaped when escape_html=True."""
+        chat = ChatUI(escape_html=True)
         html = chat._render_live_html("&")
         assert "&amp;" in html
 
     def test_render_escapes_script_tag(self, mock_display: list) -> None:
-        """Test that script tags are properly escaped (XSS prevention)."""
-        chat = ChatUI()
+        """Test that script tags are properly escaped (XSS prevention) when escape_html=True."""
+        chat = ChatUI(escape_html=True)
         html = chat._render_live_html("<script>alert('xss')</script>")
 
         assert "<script>" not in html
@@ -199,8 +199,8 @@ class TestHtmlRendering:
     def test_html_escaping_parametrized(
         self, mock_display: list, input_text: str, expected_escaped: str
     ) -> None:
-        """Test various HTML escape scenarios."""
-        chat = ChatUI()
+        """Test various HTML escape scenarios when escape_html=True."""
+        chat = ChatUI(escape_html=True)
         html = chat._render_live_html(input_text)
         assert expected_escaped in html
 
@@ -271,3 +271,18 @@ class TestOnSubmit:
         chat = ChatUI()
         chat.text.value = "test"
         chat._on_submit(chat.text)  # Should not raise
+
+    def test_empty_message_does_nothing(self, mock_display: list) -> None:
+        """Test that submitting an empty message does nothing."""
+        chat = ChatUI()
+        callback_called: list[str] = []
+
+        def callback(msg: str) -> None:
+            callback_called.append(msg)
+
+        chat.connect(callback)
+        chat.text.value = ""
+        chat._on_submit(chat.text)
+
+        assert callback_called == []
+        assert chat.text.disabled is False
