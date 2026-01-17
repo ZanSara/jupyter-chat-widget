@@ -86,11 +86,7 @@ class ChatUI:
             .replace(">", "&gt;")
             .replace("\n", "<br>")
         )
-        return f"""
-        <p style="font-family: monospace;">
-          <b>assistant:</b> {escaped}
-        </p>
-        """
+        return f"<b>assistant:</b> {escaped}"
 
     def _update_live_line(self) -> None:
         """Update the live response display."""
